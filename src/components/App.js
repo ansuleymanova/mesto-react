@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -6,11 +6,11 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -42,7 +42,7 @@ function App() {
           <Header />
           <Main onCardClick={handleCardClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}/>
           <Footer />
-        <PopupWithForm name="profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+        <PopupWithForm name="profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
           <label htmlFor="name"></label>
           <input type="text" name="name" className="popup__field popup__field_type_name" id="name" required
                  minLength="2" maxLength="40" placeholder="Ваше имя" />
@@ -52,13 +52,13 @@ function App() {
                  maxLength="200" placeholder="Расскажите о себе" />
           <span className="bio-error"></span>
         </PopupWithForm>
-        <PopupWithForm name="avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+        <PopupWithForm name="avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
           <label htmlFor="picture-link"></label>
           <input type="url" name="avatar" className="popup__field popup__field_type_avatar" id="avatar"
                  placeholder="Ссылка на картинку" required />
           <span className="avatar-error"></span>
         </PopupWithForm>
-        <PopupWithForm name="card" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+        <PopupWithForm name="card" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
           <label htmlFor="title"></label>
           <input type="text" name="title" className="popup__field popup__field_type_title" id="title"
                  placeholder="Название" required minLength="2" maxLength="30" />
@@ -68,7 +68,7 @@ function App() {
                  placeholder="Ссылка на картинку" required />
           <span className="picture-link-error"></span>
         </PopupWithForm>
-        <PopupWithForm name="confirm" title="Вы уверены?" isOpen={isConfirmPopupOpen} onClose={closeAllPopups}></PopupWithForm>
+        <PopupWithForm name="confirm" title="Вы уверены?" isOpen={isConfirmPopupOpen} onClose={closeAllPopups} buttonText="Да"></PopupWithForm>
         <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
       </div>

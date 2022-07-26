@@ -1,12 +1,12 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../utils/api';
 import Card from './Card.js';
 
 export default function Main(props) {
-    const [userName, setUserName] = React.useState('');
-    const [userDescription, setUserDescription] = React.useState('');
-    const [userAvatar, setUserAvatar] = React.useState('');
-    const [cards, setCards] = React.useState([]);
+    const [userName, setUserName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
+    const [cards, setCards] = useState([]);
 
     function initialRender() {
         Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([userInfo, cards]) => {
@@ -17,7 +17,7 @@ export default function Main(props) {
         }).catch((err) => {console.log(err)})
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         initialRender();
     }, []);
 
@@ -26,8 +26,7 @@ export default function Main(props) {
             <section className="profile-area">
                 <div className="profile-area__profile">
                     <div className="profile-area__overlay" onClick={props.onEditAvatar}></div>
-                    <img className="profile-area__avatar" alt="Аватар пользователя"
-                         style={{ backgroundImage: `url(${userAvatar})`, backgroundSize: "contain" }}/>
+                    <img className="profile-area__avatar" alt="Аватар пользователя" src={userAvatar}/>
                     <div className="profile-area__profile-info">
                         <div className="profile-area__heading-edit">
                             <h1 className="profile-area__heading">{userName}</h1>

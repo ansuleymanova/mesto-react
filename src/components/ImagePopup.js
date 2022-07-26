@@ -1,5 +1,5 @@
 export default function ImagePopup(props) {
-    const className = `popup popup_type_closeup ${props.card.name ? 'popup_opened': ''}`;
+    const className = `popup popup_type_closeup ${props.card.name && 'popup_opened'}`;
 
     return (
         <div className={className}>
