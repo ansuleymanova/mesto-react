@@ -1,25 +1,19 @@
-import { useEffect, useState } from 'react';
-import { api } from '../utils/api';
+import {useContext, useEffect, useState} from 'react';
 import Card from './Card.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 export default function Main(props) {
     const [userName, setUserName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [userAvatar, setUserAvatar] = useState('');
-    const [cards, setCards] = useState([]);
 
-    function initialRender() {
-        Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([userInfo, cards]) => {
-            setUserName(userInfo.name);
-            setUserAvatar(userInfo.avatar);
-            setUserDescription(userInfo.about);
-            setCards(cards);
-        }).catch((err) => {console.log(err)})
-    }
+    const currentUser = useContext(CurrentUserContext);
 
     useEffect(() => {
-        initialRender();
-    }, []);
+        setUserName(currentUser.name);
+        setUserDescription(currentUser.about);
+        setUserAvatar(currentUser.avatar);
+    }, [currentUser]);
 
     return (
         <main className="main">
@@ -40,8 +34,8 @@ export default function Main(props) {
             </section>
 
             <section className="elements">
-                {cards.map((card) => (
-                    <Card card={card} key={card._id} onCardClick={props.onCardClick}></Card>
+                {props.cards.map((card) => (
+                    <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}></Card>
                 ))
                 }
             </section>
