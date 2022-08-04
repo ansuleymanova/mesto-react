@@ -57,18 +57,17 @@ function App() {
     }
 
     function handleUpdateUser({ name, about }) {
-    console.log(name, about);
       api.patchUserInfo({ name, about }).then((res) => {
         setCurrentUser(res);
         closeAllPopups();
-      })
+      }).catch((err) => console.log(err))
     }
 
     function handleUpdateAvatar({avatar}) {
       api.patchAvatar({avatar: avatar}).then((link) => {
         setCurrentUser(link);
         closeAllPopups();
-      })
+      }).catch((err) => console.log(err))
     }
 
     function handleAddPlaceSubmit({ name, link }) {
@@ -76,7 +75,7 @@ function App() {
           .then((res) => {
             setCards([res, ...cards]);
             closeAllPopups();
-          })
+          }).catch((err) => console.log(err))
     }
 
   useEffect(() => {
@@ -84,10 +83,8 @@ function App() {
         .then(([userInfo, initialCards]) => {
           setCurrentUser(userInfo);
           setCards(initialCards)
-        }).catch((err) => {
-      console.log(err)
-    })
-  })
+        }).catch((err) => console.log(err))
+  }, [])
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
