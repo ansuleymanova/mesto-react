@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 export default function AddPlacePopup(props) {
@@ -17,6 +17,11 @@ export default function AddPlacePopup(props) {
         e.preventDefault();
         props.onAddPlace({ name, link })
     }
+
+    useEffect(() => {
+        setName('');
+        setLink('');
+    }, [props.isOpen])
 
     return (
         <PopupWithForm name="card" title="Новое место" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} buttonText="Сохранить">

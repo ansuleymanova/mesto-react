@@ -23,13 +23,13 @@ function App() {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.toggleCardLike(card._id, isLiked).then((newCard) => {
       setCards((state) => state.map((c) => c._id ===card._id ? newCard : c))
-    })
+    }).catch((err) => console.log(err))
   }
 
   function handleCardDelete(card) {
     api.deleteCard(card._id).then(() => {
       setCards((state) => state.filter((c) => c._id !== card._id))
-    })
+    }).catch((err) => console.log(err))
   }
 
   function handleCardClick(card) {
